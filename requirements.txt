@@ -1,0 +1,14 @@
+streamlit
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+xgboost
+transformers
+torch
+sentencepiece
+joblib
+faiss-cpu
+google-generativeai
+openpyxl
