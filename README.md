@@ -1,614 +1,310 @@
-\# 💰 Sistem Analisis Transaksi Keuangan Cerdas Menggunakan Machine Learning dan Chatbot Retrieval-Augmented Generation Berbasis Streamlit
+# 💰 Intelligent Financial Transaction Analysis System Using Machine Learning and Retrieval-Augmented Generation Chatbot Based on Streamlit
 
+## 📖 Description
 
+This project aims to develop an intelligent financial transaction analysis system by integrating **Artificial Intelligence (AI)** techniques, specifically **Machine Learning** and **Retrieval-Augmented Generation (RAG)**. The system is designed to assist users in automatically analyzing financial transaction data by classifying transactions based on transaction category, transaction type, and payment method.
 
-\## 📖 Deskripsi
+The classification process employs a **Hybrid IndoBERT-XGBoost** approach, where **IndoBERT** serves as a _feature extractor_ to generate semantic representations of transaction texts, while **XGBoost** acts as the _classifier_ to perform prediction. The classification results are presented through an interactive dashboard, enabling users to gain insights into their transaction patterns more effectively.
 
+In addition to transaction classification and analysis, the system provides a **Retrieval-Augmented Generation (RAG)** chatbot that allows users to ask questions related to the analysis results. The chatbot utilizes a knowledge base generated from transaction data to produce accurate, relevant, and context-aware responses.
 
+The application is developed using **Streamlit** as an interactive web interface, allowing users to upload transaction datasets, analyze financial records, visualize results, and interact with the AI chatbot through a single integrated platform.
 
-Proyek ini bertujuan untuk membangun sistem analisis transaksi keuangan cerdas yang memanfaatkan kombinasi metode \*\*Artificial Intelligence (AI)\*\*, yaitu \*\*Machine Learning\*\* dan \*\*Retrieval-Augmented Generation (RAG)\*\*. Sistem dirancang untuk membantu pengguna menganalisis data transaksi secara otomatis dengan mengklasifikasikan transaksi berdasarkan kategori, jenis transaksi, dan metode pembayaran.
+---
 
+# 🖼️ Application Preview
 
+### 🏠 Home Page
 
-Dalam proses klasifikasi, sistem menggunakan pendekatan \*\*Hybrid IndoBERT-XGBoost\*\*, yaitu \*\*IndoBERT\*\* sebagai \*feature extractor\* untuk menghasilkan representasi teks transaksi dan \*\*XGBoost\*\* sebagai \*classifier\* untuk melakukan prediksi. Hasil analisis kemudian disajikan dalam bentuk dashboard interaktif yang memudahkan pengguna memahami pola transaksi.
+> The main interface displayed before the transaction analysis process begins.
 
+![Home Page](images/home.png)
 
+---
 
-Selain melakukan analisis dan klasifikasi, sistem juga menyediakan chatbot berbasis \*\*Retrieval-Augmented Generation (RAG)\*\* yang memungkinkan pengguna mengajukan pertanyaan mengenai hasil analisis transaksi. Chatbot memanfaatkan basis pengetahuan yang telah dibangun untuk menghasilkan jawaban yang relevan dan informatif.
+### 📂 Dataset Upload
 
+> Users can upload transaction datasets in CSV or Excel format.
 
+![Upload Dataset](images/upload.png)
 
-Aplikasi dikembangkan menggunakan \*\*Streamlit\*\* sebagai antarmuka web interaktif sehingga pengguna dapat melakukan analisis transaksi, memvisualisasikan hasil, dan berinteraksi dengan chatbot melalui satu platform yang terintegrasi.
+---
 
+### 📊 Analysis Dashboard
 
+> Interactive dashboard presenting transaction analysis and visualization.
 
-\---
+![Dashboard](images/dashboard.png)
 
+---
 
+### 🏷️ Prediction Results
 
-\# 🖼️ Tampilan Aplikasi
+> Displays the predicted transaction category, transaction type, and payment method.
 
+![Prediction](images/prediksi.png)
 
+---
 
-\### 🏠 Halaman Utama
+### 🤖 RAG Chatbot
 
+> Retrieval-Augmented Generation (RAG) chatbot that answers questions related to transaction analysis results.
 
+![Chatbot](images/chatbot.png)
 
-> Tampilan awal aplikasi sebelum proses analisis transaksi.
+---
 
+# ✨ Features
 
+- 📂 Upload transaction datasets in **CSV** or **Excel (.xlsx)** format.
+- 🏷️ Predict **transaction categories** _(Shopping, Salary, Entertainment, Investment, Healthcare, Food & Beverage, Education, Travel, Transportation, and Utilities)._
+- 💰 Predict **transaction types** _(Income and Expense)._
+- 💳 Predict **payment methods** _(BNI, BCA, BRI, Mandiri, QRIS, OVO, GoPay, DANA, ShopeePay, and Cash)._
+- 📊 Interactive dashboard for transaction analysis and visualization.
+- 📥 Download prediction and analysis results.
+- 🧠 Automatically generate a **Knowledge Base** from transaction data.
+- 🤖 AI chatbot powered by **Retrieval-Augmented Generation (RAG)**.
+- 🔍 Retrieve relevant information using **FAISS Vector Database**.
+- ✨ Integrate **Google Gemini** to generate informative and context-aware chatbot responses.
 
-!\[Halaman Utama](images/home.png)
+---
 
+# 🧠 Methodology
 
+## Machine Learning
 
-\---
+The transaction classification module utilizes a **Hybrid IndoBERT-XGBoost** approach consisting of the following stages:
 
+- **IndoBERT Base** as the **text encoder** to transform transaction descriptions into dense vector representations (embeddings).
+- **Mean Pooling** to generate sentence-level embeddings from IndoBERT token outputs.
+- **XGBoost Classifier** to classify transactions based on the generated embeddings.
 
+### Classification Models
 
-\### 📂 Upload Dataset
+The system employs three independently trained classification models:
 
+- 🏷️ **Transaction Category Model**
+- 💰 **Transaction Type Model**
+- 💳 **Payment Method Model**
 
+---
 
-> Pengguna dapat mengunggah dataset transaksi dalam format CSV atau Excel.
+# 🤖 Chatbot
 
+The chatbot module is built using:
 
+- Retrieval-Augmented Generation (RAG)
+- FAISS Vector Search
+- Google Gemini
 
-!\[Upload Dataset](images/upload.png)
+---
 
-
-
-\---
-
-
-
-\### 📊 Dashboard Analisis
-
-
-
-> Dashboard interaktif yang menampilkan hasil analisis transaksi.
-
-
-
-!\[Dashboard](images/dashboard.png)
-
-
-
-\---
-
-
-
-\### 🏷️ Hasil Prediksi
-
-
-
-> Hasil klasifikasi kategori transaksi, jenis transaksi, dan metode pembayaran.
-
-
-
-!\[Prediksi](images/prediksi.png)
-
-
-
-\---
-
-
-
-\### 🤖 Chatbot RAG
-
-
-
-> Chatbot berbasis Retrieval-Augmented Generation (RAG) yang dapat menjawab pertanyaan mengenai hasil analisis transaksi.
-
-
-
-!\[Chatbot](images/chatbot.png)
-
-
-
-\---
-
-
-
-\# ✨ Fitur
-
-
-
-\- 📂 Upload dataset transaksi dalam format \*\*CSV\*\* atau \*\*Excel (.xlsx)\*\*.
-
-\- 🏷️ Prediksi \*\*kategori transaksi\*\* \_(Belanja, Gaji, Hiburan, Investasi, Kesehatan, Makanan \& Minuman, Pendidikan, Perjalanan, Transportasi, dan Utilitas).\_
-
-\- 💰 Prediksi \*\*jenis transaksi\*\* \_(Pemasukan dan Pengeluaran).\_
-
-\- 💳 Prediksi \*\*metode pembayaran\*\* \_(BNI, BCA, BRI, Mandiri, QRIS, OVO, GoPay, DANA, ShopeePay, dan Tunai).\_
-
-\- 📊 Dashboard interaktif untuk visualisasi dan analisis hasil prediksi.
-
-\- 📥 Download hasil analisis dan prediksi.
-
-\- 🧠 Pembuatan \*\*Knowledge Base\*\* secara otomatis dari data transaksi.
-
-\- 🤖 Chatbot berbasis \*\*Retrieval-Augmented Generation (RAG)\*\* untuk menjawab pertanyaan mengenai hasil analisis transaksi.
-
-\- 🔍 Pencarian informasi yang relevan menggunakan \*\*FAISS Vector Database\*\*.
-
-\- ✨ Integrasi \*\*Google Gemini\*\* untuk menghasilkan respons chatbot yang informatif dan kontekstual.
-
-
-
-\---
-
-
-
-\# 🧠 Metode
-
-
-
-\## Machine Learning
-
-
-
-Metode klasifikasi transaksi pada sistem ini menggunakan pendekatan \*\*Hybrid IndoBERT-XGBoost\*\*, dengan tahapan sebagai berikut:
-
-
-
-\- \*\*IndoBERT Base\*\* sebagai \*\*text encoder\*\* untuk mengubah teks transaksi menjadi representasi vektor (embedding).
-
-\- \*\*Mean Pooling\*\* untuk menghasilkan embedding dari keluaran token IndoBERT.
-
-\- \*\*XGBoost Classifier\*\* sebagai model klasifikasi yang memanfaatkan embedding hasil encoding untuk melakukan prediksi.
-
-
-
-\### Model Klasifikasi
-
-
-
-Sistem menggunakan tiga model klasifikasi yang dilatih secara terpisah, yaitu:
-
-
-
-\- 🏷️ \*\*Model Kategori Transaksi\*\*
-
-\- 💰 \*\*Model Jenis Transaksi\*\*
-
-\- 💳 \*\*Model Metode Pembayaran\*\*
-
-
-
-\---
-
-
-
-\# 🤖 Chatbot
-
-
-
-Metode chatbot menggunakan:
-
-
-
-\- Retrieval-Augmented Generation (RAG)
-
-\- FAISS Vector Search
-
-\- Google Gemini
-
-
-
-\---
-
-
-
-\# 🔄 Pipeline Sistem
-
-
+# 🔄 System Pipeline
 
 ```text
-
 Dataset
-
 ↓
-
-Preprocessing Text
-
+Text Preprocessing
 ↓
-
 IndoBERT Feature Extraction
-
 ↓
-
 Mean Pooling Embedding
-
 ↓
-
 XGBoost Classification
-
 ↓
-
-Dashboard Analisis
-
+Analysis Dashboard
 ↓
-
 Knowledge Base
-
 ↓
-
 FAISS Retrieval
-
 ↓
-
-Gemini
-
+Google Gemini
 ↓
-
 RAG Chatbot
-
 ```
 
+---
 
+## 🖼️ System Pipeline Diagram
 
-\---
+> Overview of the system workflow from transaction classification to the RAG chatbot.
 
+![System Pipeline](images/pipeline.png)
 
+---
 
-\## 🖼️ Diagram Pipeline Sistem
-
-
-
-> Diagram alur kerja sistem mulai dari proses klasifikasi hingga chatbot RAG.
-
-
-
-!\[Pipeline Sistem](images/pipeline.png)
-
-
-
-\---
-
-
-
-\# 🏗️ Arsitektur Sistem
-
-
+# 🏗️ System Architecture
 
 ```text
-
 Dataset
-
 ↓
-
 IndoBERT
-
 ↓
-
 Embedding
-
 ↓
-
 XGBoost
-
 ↓
-
 Dashboard
-
 ↓
-
 Knowledge Base
-
 ↓
-
 FAISS
-
 ↓
-
-Gemini
-
+Google Gemini
 ↓
-
 Chatbot
-
 ```
 
+---
 
+## 🖼️ System Architecture Diagram
 
-\---
+> Overall architecture of the intelligent financial transaction analysis system.
 
+![System Architecture](images/architecture.png)
 
+---
 
-\## 🖼️ Diagram Arsitektur Sistem
-
-
-
-> Diagram arsitektur keseluruhan sistem.
-
-
-
-!\[Arsitektur Sistem](images/architecture.png)
-
-
-
-\---
-
-
-
-\# 📂 Struktur Folder
-
-
+# 📂 Project Structure
 
 ```text
-
 project/
 
-
-
 ├── STREAMLITE KEUANGAN/
-
 │   ├── app.py
-
 │   └── run.bat
-
 │
-
 ├── DATASET/
-
-│   └── transaksi\_indonesia.xlsx
-
+│   └── transaksi_indonesia.xlsx
 │
-
 ├── MODELS/
-
-│   ├── xgb\_model\_kategori.json
-
-│   ├── xgb\_model\_jenis.json
-
-│   ├── xgb\_model\_pembayaran.json
-
-│   ├── encoder\_kategori.npy
-
-│   ├── encoder\_jenis.npy
-
-│   ├── encoder\_pembayaran.npy
-
+│   ├── xgb_model_kategori.json
+│   ├── xgb_model_jenis.json
+│   ├── xgb_model_pembayaran.json
+│   ├── encoder_kategori.npy
+│   ├── encoder_jenis.npy
+│   ├── encoder_pembayaran.npy
 │
-
 ├── images/
-
 │   ├── home.png
-
 │   ├── upload.png
-
 │   ├── dashboard.png
-
 │   ├── prediksi.png
-
 │   ├── chatbot.png
-
 │   ├── pipeline.png
-
 │   ├── architecture.png
-
 │   └── output.png
-
 │
-
 ├── requirements.txt
-
 │
-
 └── README.md
-
 ```
 
+---
 
+# 🛠️ Technologies Used
 
-\---
+- Python
+- Streamlit
+- Transformers
+- IndoBERT
+- XGBoost
+- Scikit-learn
+- Pandas
+- NumPy
+- FAISS
+- Plotly
+- Google Gemini API
 
-\# 🛠️ Teknologi
+---
 
+# 📊 System Output
 
+The application provides:
 
-\- Python
+- 🏷️ Predicted Transaction Category
+- 💰 Predicted Transaction Type
+- 💳 Predicted Payment Method
+- 📊 Interactive Transaction Analysis Dashboard
+- 📈 Data Visualization
+- 📥 Downloadable Prediction Results (CSV)
+- 🤖 AI-Powered RAG Chatbot
 
-\- Streamlit
+---
 
-\- Transformers
+## 🖼️ Sample Output
 
-\- IndoBERT
+> Example of transaction analysis results, dashboard visualization, and chatbot responses.
 
-\- XGBoost
+![System Output](images/output.png)
 
-\- Scikit-Learn
+---
 
-\- Pandas
+# 📈 Dataset
 
-\- NumPy
+The dataset used in this project is a **synthetic financial transaction dataset** generated using **ChatGPT** for research and educational purposes in developing an intelligent financial transaction analysis system.
 
-\- FAISS
+---
 
-\- Plotly
+## 🖼️ Sample Dataset
 
-\- Google Gemini API
+> Sample transaction records used for model training and evaluation.
 
+![Dataset](images/dataset.png)
 
+---
 
-\---
+# 🚀 Getting Started
 
-
-
-\# 📊 Output Sistem
-
-
-
-Sistem menghasilkan:
-
-
-
-\- 🏷️ Kategori Transaksi
-
-\- 💰 Jenis Transaksi
-
-\- 💳 Metode Pembayaran
-
-\- 📊 Dashboard Analisis Transaksi
-
-\- 📈 Visualisasi Data
-
-\- 📥 File Hasil Prediksi (CSV)
-
-\- 🤖 Chatbot Berbasis RAG
-
-
-
-\---
-
-
-
-\## 🖼️ Contoh Output Sistem
-
-
-
-> Contoh hasil analisis transaksi, visualisasi dashboard, dan chatbot.
-
-
-
-!\[Output Sistem](images/output.png)
-
-
-
-\---
-
-
-
-\# 📈 Dataset
-
-
-
-Dataset yang digunakan merupakan \*\*dataset sintetis\*\* yang dibuat menggunakan ChatGPT untuk keperluan penelitian dan pengembangan sistem analisis transaksi keuangan.
-
-
-
-\---
-
-
-
-\## 🖼️ Contoh Dataset
-
-
-
-> Contoh data transaksi yang digunakan dalam proses pelatihan dan pengujian model.
-
-
-
-!\[Dataset](images/dataset.png)
-
-
-
-\---
-
-
-
-\# 🚀 Cara Menjalankan Aplikasi
-
-
-
-\## 1. Clone Repository
-
-
+## 1. Clone the Repository
 
 ```bash
-
 git clone https://github.com/ogikkoding/nama-repository.git
-
 ```
 
-
-
-\## 2. Masuk ke Folder Project
-
-
+## 2. Navigate to the Project Directory
 
 ```bash
-
 cd nama-repository
-
 ```
 
-
-
-\## 3. Install Seluruh Library
-
-
+## 3. Install Dependencies
 
 ```bash
-
 pip install -r requirements.txt
-
 ```
 
-
-
-\## 4. Jalankan Aplikasi Streamlit
-
-
+## 4. Run the Streamlit Application
 
 ```bash
-
 streamlit run app.py
-
 ```
 
+---
 
+# 💻 Development Environment
 
-\---
+- Google Colab (Model Training)
+- Google Drive (Model Storage)
+- Visual Studio Code (Application Development)
+- Streamlit (Application Deployment)
 
+---
 
+# 👨‍💻 Author
 
-\# 💻 Platform Pengembangan
+**Yogi Irawan**
 
+- 🎓 Bachelor's Student in Informatics
+- 🤖 Research Interests: Artificial Intelligence, Natural Language Processing, Machine Learning, and Financial Data Analytics
+- 📧 Email: yogiirawan490@gmail.com
+- 💼 LinkedIn: https://www.linkedin.com/in/yogi-irawan-ab146a387
+- 🐙 GitHub: https://github.com/ogikkoding
 
+---
 
-\- Google Colab (Pelatihan Model)
+# 📄 License
 
-\- Google Drive (Penyimpanan Model)
+This project is licensed under the **MIT License**.
 
-\- Visual Studio Code (Pengembangan Aplikasi)
-
-\- Streamlit (Implementasi Aplikasi)
-
-
-
-\---
-
-
-
-\## 👨‍💻 Author
-
-
-
-\*\*Yogi Irawan\*\*
-
-
-
-\- 🎓 Undergraduate Student of Informatics
-
-\- 🤖 Interested in Artificial Intelligence \& Computer Vision
-
-\- 📧 Email: yogiirawan490@gmail.com
-
-\- 💼 LinkedIn: https://www.linkedin.com/in/yogi-irawan-ab146a387
-
-\- 🐙 GitHub: https://github.com/ogikkoding
-
-
-
-\---
-
-
-
-\# 📄 License
-
-
-
-This project is developed for academic research and educational purposes.
-
+Copyright (c) 2026 **Yogi Irawan**

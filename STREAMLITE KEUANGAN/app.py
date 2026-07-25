@@ -34,11 +34,20 @@ st.caption(
 # ==========================================================
 # KONFIGURASI GEMINI
 # ==========================================================
+
+from dotenv import load_dotenv
 import os
 import google.generativeai as genai
 
+# Membaca file .env
+load_dotenv()
+
+# Mengambil API Key dari .env
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key="AQ.Ab8RN6KYRere4NS1xcdPAY8zNjr8d7SffU8dCN1EJW9wNIN8zw")
+
+# Konfigurasi Gemini
+genai.configure(api_key=GEMINI_API_KEY)
+
 gemini_model = genai.GenerativeModel(
     model_name="gemini-3.5-flash"
 )
@@ -53,7 +62,6 @@ def load_indobert():
     Load tokenizer dan model IndoBERT.
     Model hanya dimuat sekali selama aplikasi berjalan.
     """
-
     tokenizer = AutoTokenizer.from_pretrained(
         INDOBERT_MODEL_NAME
     )
@@ -81,17 +89,17 @@ def load_xgboost_models():
 
     model_kategori = xgb.XGBClassifier()
     model_kategori.load_model(
-        "xgb_model_kategori.json"
+        "../MODELS/xgb_model_kategori.json"
     )
 
     model_jenis = xgb.XGBClassifier()
     model_jenis.load_model(
-        "xgb_model_jenis.json"
+        "../MODELS/xgb_model_jenis.json"
     )
 
     model_pembayaran = xgb.XGBClassifier()
     model_pembayaran.load_model(
-        "xgb_model_pembayaran.json"
+        "../MODELS/xgb_model_pembayaran.json"
     )
 
     return {
@@ -112,17 +120,17 @@ def load_encoders():
     """
     encoders = {
         "kategori": np.load(
-            "encoder_kategori.npy",
+            "../MODELS/encoder_kategori.npy",
             allow_pickle=True
         ),
 
         "jenis": np.load(
-            "encoder_jenis.npy",
+            "../MODELS/encoder_jenis.npy",
             allow_pickle=True
         ),
 
         "pembayaran": np.load(
-            "encoder_pembayaran.npy",
+            "../MODELS/encoder_pembayaran.npy",
             allow_pickle=True
         ),
     }
@@ -354,9 +362,7 @@ def decode_prediction(predictions, encoder):
     """
     Mengubah hasil prediksi numerik menjadi label asli.
     """
-
     predictions = np.asarray(predictions).astype(int)
-
     return encoder[predictions]
 
 
@@ -364,7 +370,6 @@ def predict_labels(embeddings):
     """
     Melakukan prediksi menggunakan seluruh model XGBoost.
     """
-
     predictions = {}
 
     # -----------------------------
@@ -768,7 +773,7 @@ def show_faiss_summary(index):
             info["dimension"]
         )
 
-        # ==========================================================
+# ==========================================================
 # RETRIEVAL
 # ==========================================================
 def retrieve_context(
@@ -957,7 +962,7 @@ def chatbot_interface(
     """
 
     st.header(
-        "💬 Chatbot Analisis Transaksi"
+        "Chatbot Analisis Transaksi"
     )
 
     initialize_chat()
@@ -1000,7 +1005,7 @@ def chatbot_interface(
             answer
         )
 
-        # ==========================================================
+# ==========================================================
 # MAIN STREAMLIT APP
 # ==========================================================
 def main():
@@ -1123,7 +1128,7 @@ def main():
 
         st.divider()
 
-            # ======================================================
+    # ======================================================
     # CHATBOT
     # ======================================================
     if (
