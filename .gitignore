@@ -219,3 +219,6 @@ __marimo__/
 
 # Environment Variables key
 .env
+
+# Sembunyikan folder MODELS beserta seluruh isinya
+MODELS/
