@@ -101,28 +101,40 @@ Metode chatbot menggunakan:
 
 ---
 
-# 🔄 Diagram Pipeline Sistem
+# 🔄 System Pipeline
 
-````mermaid
+The overall workflow of the intelligent financial transaction analysis system consists of the following stages:
+
+```mermaid
 graph TD
-    A[Dataset] --> B[Preprocessing Text]
-    B --> C[IndoBERT Feature Extraction]
+    A[Upload Transaction Dataset] --> B[Data Preprocessing]
+    B --> C[Text Feature Extraction using IndoBERT]
     C --> D[Mean Pooling Embedding]
     D --> E[XGBoost Classification]
-    E --> F[Dashboard Analisis]
-    F --> G[Knowledge Base]
-    G --> H[FAISS Retrieval]
-    H --> I[Gemini]
-    I --> J[RAG Chatbot]
+
+    E --> F[Transaction Category]
+    E --> G[Transaction Type]
+    E --> H[Payment Method]
+
+    F --> I[Analytics Dashboard]
+    G --> I
+    H --> I
+
+    I --> J[Knowledge Base Generation]
+    J --> K[FAISS Vector Index]
+    K --> L[Relevant Context Retrieval]
+    L --> M[Google Gemini]
+    M --> N[RAG Chatbot Response]
+```
 
 ---
 
-# 📂 Struktur Folder
+# 🏗️ Project Structure
 
 ```text
 project/
-
-├── STREAMLITE KEUANGAN/
+│
+├── STREAMLIT_FINANCE/
 │   ├── app.py
 │   └── run.bat
 │
@@ -137,120 +149,178 @@ project/
 │   ├── encoder_jenis.npy
 │   ├── encoder_pembayaran.npy
 │
-├── images/
+├── IMAGES/
 │   ├── home.png
-│   ├── upload.png
-│   ├── dashboard.png
-│   ├── prediksi.png
+│   ├── analisis.png
 │   ├── chatbot.png
+│   ├── dataset.png
 │   ├── pipeline.png
 │   ├── architecture.png
-│   └── output.png
+│   └── Smart_finance.gif
 │
 ├── requirements.txt
-│
 └── README.md
 ```
 
 ---
 
-# 🛠️ Teknologi
+# 🛠️ Tech Stack
 
-- Python
-- Streamlit
-- Transformers
-- IndoBERT
-- XGBoost
-- Scikit-Learn
-- Pandas
-- NumPy
-- FAISS
-- Plotly
-- Google Gemini API
+This project was developed using the following technologies and libraries:
 
----
-
-# 📊 Output Sistem
-
-Sistem menghasilkan:
-
-- 🏷️ Kategori Transaksi
-- 💰 Jenis Transaksi
-- 💳 Metode Pembayaran
-- 📊 Dashboard Analisis Transaksi
-- 📈 Visualisasi Data
-- 📥 File Hasil Prediksi (CSV)
-- 🤖 Chatbot Berbasis RAG
+- 🐍 Python
+- 🌐 Streamlit
+- 🤗 Hugging Face Transformers
+- 🧠 IndoBERT Base
+- 🌲 XGBoost
+- 📊 Scikit-learn
+- 📈 Plotly
+- 🔍 FAISS
+- 🐼 Pandas
+- 🔢 NumPy
+- 🤖 Google Gemini API
 
 ---
 
-# 📈 Dataset
+# 📊 System Output
 
-Dataset yang digunakan merupakan **dataset sintetis** yang dibuat menggunakan ChatGPT untuk keperluan penelitian dan pengembangan sistem analisis transaksi keuangan.
+After processing the uploaded transaction dataset, the application provides:
+
+- 🏷️ Predicted Transaction Category
+- 💰 Predicted Transaction Type
+- 💳 Predicted Payment Method
+- 📊 Interactive Financial Analytics Dashboard
+- 📈 Transaction Data Visualization
+- 📥 Downloadable Prediction Results
+- 🧠 Automatically Generated Knowledge Base
+- 🤖 AI-powered RAG Chatbot for Financial Analysis
 
 ---
 
-# 🖼️ Contoh Dataset
+# 📂 Dataset
 
-> Contoh data transaksi yang digunakan dalam proses pelatihan dan pengujian model.
+This project utilizes a **synthetic financial transaction dataset** created specifically for research, experimentation, and educational purposes.
 
-![Dataset](images/dataset.png)
+Each transaction record contains financial information such as:
+
+- 📅 Transaction Date
+- 🏪 Merchant Name
+- 📝 Transaction Description
+- 💵 Transaction Amount
+- 🏷️ Transaction Category
+- 💰 Transaction Type
+- 💳 Payment Method
+
+The dataset is used to train and evaluate the three classification models as well as to construct the Knowledge Base for the Retrieval-Augmented Generation (RAG) chatbot.
 
 ---
 
-# 🚀 Cara Menjalankan Aplikasi
+# 🖼️ Dataset Sample
 
-## 1. Clone Repository
+A sample of the transaction dataset used for model training and testing.
+
+![Dataset](IMAGES/dataset.png)
+
+---
+
+# 🚀 Getting Started
+
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/ogikkoding/nama-repository.git
 ```
 
-## 2. Masuk ke Folder Project
+---
+
+## 2. Navigate to the Project Directory
 
 ```bash
 cd nama-repository
 ```
 
-## 3. Install Seluruh Library
+---
+
+## 3. Install the Required Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 4. Jalankan Aplikasi Streamlit
+---
+
+## 4. Launch the Streamlit Application
 
 ```bash
 streamlit run app.py
 ```
 
----
-
-# 💻 Platform Pengembangan
-
-- Google Colab (Pelatihan Model)
-- Google Drive (Penyimpanan Model)
-- Visual Studio Code (Pengembangan Aplikasi)
-- Streamlit (Implementasi Aplikasi)
+After the server starts successfully, Streamlit will automatically open the application in your default web browser.
 
 ---
 
-## 👨‍💻 Author
+# 💻 Development Environment
 
-**Yogi Irawan**
+This project was developed using:
 
-- 🎓 Undergraduate Student of Informatics
-- 🤖 Interested in Artificial Intelligence & Computer Vision
-- 📧 Email: yogiirawan490@gmail.com
-- 💼 LinkedIn: https://www.linkedin.com/in/yogi-irawan-ab146a387
-- 🐙 GitHub: https://github.com/ogikkoding
+- ☁️ Google Colab (Model Training)
+- 💾 Google Drive (Model Storage)
+- 💻 Visual Studio Code (Application Development)
+- 🌐 Streamlit (Web Deployment)
+
+---
+
+# 👨‍💻 Developer
+
+## Yogi Irawan
+
+**Undergraduate Student of Informatics Engineering**
+
+### Research Interests
+
+- Artificial Intelligence
+- Natural Language Processing
+- Machine Learning
+- Large Language Models
+- Retrieval-Augmented Generation
+
+### Contact
+
+📧 **Email**
+
+yogiirawan490@gmail.com
+
+💼 **LinkedIn**
+
+https://www.linkedin.com/in/yogi-irawan-ab146a387
+
+🐙 **GitHub**
+
+https://github.com/ogikkoding
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+If you encounter bugs, have ideas for improvements, or would like to contribute new features, feel free to:
+
+- Open an Issue
+- Submit a Pull Request
+
+---
+
+# ⭐ Support
+
+If you find this project useful, please consider giving it a ⭐ on GitHub.
+
+Your support helps encourage further development and future improvements.
 
 ---
 
 # 📄 License
 
-This project is licensed under the **MIT License**.
-Copyright (c) 2026 **Yogi Irawan**
+This project is distributed under the **MIT License**.
 
----
-````
+Copyright © 2026 **Yogi Irawan**

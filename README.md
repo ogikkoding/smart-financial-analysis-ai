@@ -117,30 +117,33 @@ The conversational AI module combines:
 
 # 🔄 System Pipeline
 
+The intelligent financial transaction analysis system follows the workflow below:
+
 ```mermaid
 graph TD
+    A[Upload Transaction Dataset] --> B[Data Preprocessing]
+    B --> C[IndoBERT Feature Extraction]
+    C --> D[Mean Pooling]
+    D --> E[XGBoost Classification]
 
-A[Transaction Dataset]
---> B[Text Preprocessing]
+    E --> F[Transaction Category]
+    E --> G[Transaction Type]
+    E --> H[Payment Method]
 
-B --> C[IndoBERT Feature Extraction]
+    F --> I[Interactive Analytics Dashboard]
+    G --> I
+    H --> I
 
-C --> D[Mean Pooling Embedding]
-
-D --> E[XGBoost Classification]
-
-E --> F[Analytics Dashboard]
-
-F --> G[Knowledge Base Generation]
-
-G --> H[FAISS Vector Index]
-
-H --> I[Relevant Context Retrieval]
-
-I --> J[Google Gemini]
-
-J --> K[RAG Chatbot Response]
+    I --> J[Knowledge Base Generation]
+    J --> K[FAISS Vector Database]
+    K --> L[Relevant Context Retrieval]
+    L --> M[Google Gemini]
+    M --> N[RAG Chatbot Response]
 ```
+
+The workflow begins when users upload a financial transaction dataset. The transaction text is preprocessed and transformed into contextual embeddings using **IndoBERT** with **Mean Pooling**. These embeddings are then classified by **XGBoost** to predict the transaction category, transaction type, and payment method.
+
+The prediction results are presented through an interactive analytics dashboard. Subsequently, the analyzed data is automatically converted into a knowledge base and indexed using **FAISS**. When users interact with the chatbot, relevant information is retrieved from the vector database and provided to **Google Gemini**, enabling context-aware responses through the **Retrieval-Augmented Generation (RAG)** framework.
 
 ---
 
@@ -162,7 +165,7 @@ project/
 │   ├── xgb_model_pembayaran.json
 │   ├── encoder_kategori.npy
 │   ├── encoder_jenis.npy
-│   └── encoder_pembayaran.npy
+│   ├── encoder_pembayaran.npy
 │
 ├── IMAGES/
 │   ├── home.png
@@ -179,9 +182,9 @@ project/
 
 ---
 
-# 🛠️ Tech Stack
+# 🛠️ Technology Stack
 
-The application was developed using:
+This project was developed using the following technologies and libraries:
 
 - 🐍 Python
 - 🌐 Streamlit
@@ -197,37 +200,42 @@ The application was developed using:
 
 ---
 
-# 📊 Prediction Output
+# 📊 System Output
 
-The application provides:
+After processing the uploaded dataset, the application provides:
 
-- 🏷️ Transaction Category
-- 💰 Transaction Type
-- 💳 Payment Method
-- 📊 Financial Dashboard
-- 📈 Interactive Visualizations
+- 🏷️ Predicted Transaction Category
+- 💰 Predicted Transaction Type
+- 💳 Predicted Payment Method
+- 📊 Interactive Financial Analytics Dashboard
+- 📈 Transaction Visualization
 - 📥 Downloadable Prediction Results
-- 🤖 AI-powered Financial Assistant
+- 🧠 Automatically Generated Knowledge Base
+- 🤖 AI-powered RAG Chatbot for Transaction Analysis
 
 ---
 
 # 📂 Dataset
 
-The project utilizes a **synthetic financial transaction dataset** generated for research and educational purposes.
+This project utilizes a **synthetic financial transaction dataset** created for research, experimentation, and educational purposes.
 
-The dataset contains transaction information including:
+Each transaction record contains information such as:
 
-- Merchant
-- Transaction Description
-- Transaction Category
-- Transaction Type
-- Payment Method
-- Transaction Amount
-- Transaction Date
+- 📅 Transaction Date
+- 🏪 Merchant Name
+- 📝 Transaction Description
+- 💵 Transaction Amount
+- 🏷️ Transaction Category
+- 💰 Transaction Type
+- 💳 Payment Method
+
+The dataset is used to train and evaluate the three machine learning models while also serving as the primary data source for building the chatbot's knowledge base.
 
 ---
 
-## 🖼️ Dataset Sample
+# 🖼️ Dataset Sample
+
+The following figure illustrates a sample of the financial transaction dataset used during model training and evaluation.
 
 ![Dataset](IMAGES/dataset.png)
 
@@ -235,48 +243,42 @@ The dataset contains transaction information including:
 
 # 🚀 Getting Started
 
-## 1. Clone Repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/ogikkoding/nama-repository.git
 ```
 
----
-
-## 2. Navigate to the Project Directory
+### 2. Navigate to the Project Directory
 
 ```bash
 cd nama-repository
 ```
 
----
-
-## 3. Install Dependencies
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## 4. Launch the Streamlit Application
+### 4. Run the Streamlit Application
 
 ```bash
 streamlit run app.py
 ```
 
-The application will automatically open in your default web browser.
+Once the server starts successfully, the application will automatically open in your default web browser.
 
 ---
 
 # 💻 Development Environment
 
-Developed using:
+This project was developed using:
 
-- Google Colab
-- Visual Studio Code
-- Google Drive
-- Streamlit
+- ☁️ Google Colab (Model Training)
+- 💾 Google Drive (Model Storage)
+- 💻 Visual Studio Code (Application Development)
+- 🌐 Streamlit (Web Application Deployment)
 
 ---
 
@@ -284,7 +286,7 @@ Developed using:
 
 ## Yogi Irawan
 
-**Undergraduate Student of Informatics Engineering**
+**Undergraduate Student in Informatics Engineering**
 
 ### Research Interests
 
@@ -292,19 +294,19 @@ Developed using:
 - Natural Language Processing
 - Machine Learning
 - Large Language Models
-- Retrieval-Augmented Generation
+- Retrieval-Augmented Generation (RAG)
 
 ### Contact
 
-📧 Email
+📧 **Email**
 
 yogiirawan490@gmail.com
 
-💼 LinkedIn
+💼 **LinkedIn**
 
 https://www.linkedin.com/in/yogi-irawan-ab146a387
 
-🐙 GitHub
+🐙 **GitHub**
 
 https://github.com/ogikkoding
 
@@ -314,38 +316,10 @@ https://github.com/ogikkoding
 
 Contributions are welcome!
 
-If you encounter bugs, have suggestions, or wish to contribute new features, feel free to:
+If you discover bugs, have suggestions for improvements, or would like to contribute new features, please feel free to:
 
 - Open an Issue
 - Submit a Pull Request
-
----
-
-# 🔮 Future Improvements
-
-Potential future enhancements include:
-
-- 📱 REST API deployment using FastAPI
-- ☁️ Cloud deployment with Docker
-- 📈 Time-series financial forecasting
-- 💹 Personal financial recommendation engine
-- 🧠 Fine-tuning Indonesian LLMs for finance
-- 🔍 Hybrid Retrieval using BM25 + FAISS
-- 📊 Explainable AI (SHAP) for XGBoost predictions
-
----
-
-# 🙏 Acknowledgements
-
-Special thanks to the open-source community and the following projects:
-
-- Hugging Face Transformers
-- Google Gemini
-- FAISS
-- Streamlit
-- XGBoost
-- Scikit-learn
-- Plotly
 
 ---
 
@@ -353,12 +327,12 @@ Special thanks to the open-source community and the following projects:
 
 If you find this project useful, please consider giving it a ⭐ on GitHub.
 
-Your support motivates continued development and future improvements.
+Your support helps encourage future development and continuous improvement.
 
 ---
 
 # 📄 License
 
-This project is licensed under the **MIT License**.
+This project is distributed under the **MIT License**.
 
 Copyright © 2026 **Yogi Irawan**
