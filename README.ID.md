@@ -1,5 +1,15 @@
 # 💰 Sistem Analisis Transaksi Keuangan Cerdas Menggunakan Machine Learning dan Chatbot Retrieval-Augmented Generation Berbasis Streamlit
 
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-red)
+![IndoBERT](https://img.shields.io/badge/IndoBERT-NLP-yellow)
+![XGBoost](https://img.shields.io/badge/XGBoost-Classification-green)
+![FAISS](https://img.shields.io/badge/FAISS-Vector_DB-purple)
+![Gemini AI](https://img.shields.io/badge/Google_Gemini-RAG_Chatbot-blueviolet)
+![License](https://img.shields.io/badge/License-MIT-brightgreen)
+
+---
+
 ## 📖 Deskripsi
 
 Proyek ini bertujuan untuk membangun sistem analisis transaksi keuangan cerdas yang memanfaatkan kombinasi metode **Artificial Intelligence (AI)**, yaitu **Machine Learning** dan **Retrieval-Augmented Generation (RAG)**. Sistem dirancang untuk membantu pengguna menganalisis data transaksi secara otomatis dengan mengklasifikasikan transaksi berdasarkan kategori, jenis transaksi, dan metode pembayaran.
@@ -35,6 +45,14 @@ Aplikasi dikembangkan menggunakan **Streamlit** sebagai antarmuka web interaktif
 > Chatbot berbasis Retrieval-Augmented Generation (RAG) yang dapat menjawab pertanyaan mengenai hasil analisis transaksi.
 
 ![Chatbot](IMAGES/chatboot.png)
+
+---
+
+### 🎥 Live Demo / Alur Kerja
+
+> Alur kerja interaktif chatbot RAG yang menampilkan analisis transaksi dan fitur tanya jawab secara real-time.
+
+## ![Demo Aplikasi](IMAGES/Smart_finance.gif)
 
 ---
 
@@ -83,69 +101,19 @@ Metode chatbot menggunakan:
 
 ---
 
-# 🔄 Pipeline Sistem
+# 🔄 Diagram Pipeline Sistem
 
-```text
-Dataset
-↓
-Preprocessing Text
-↓
-IndoBERT Feature Extraction
-↓
-Mean Pooling Embedding
-↓
-XGBoost Classification
-↓
-Dashboard Analisis
-↓
-Knowledge Base
-↓
-FAISS Retrieval
-↓
-Gemini
-↓
-RAG Chatbot
-```
-
----
-
-## 🖼️ Diagram Pipeline Sistem
-
-> Diagram alur kerja sistem mulai dari proses klasifikasi hingga chatbot RAG.
-
-![Pipeline Sistem](images/pipeline.png)
-
----
-
-# 🏗️ Arsitektur Sistem
-
-```text
-Dataset
-↓
-IndoBERT
-↓
-Embedding
-↓
-XGBoost
-↓
-Dashboard
-↓
-Knowledge Base
-↓
-FAISS
-↓
-Gemini
-↓
-Chatbot
-```
-
----
-
-## 🖼️ Diagram Arsitektur Sistem
-
-> Diagram arsitektur keseluruhan sistem.
-
-![Arsitektur Sistem](images/architecture.png)
+````mermaid
+graph TD
+    A[Dataset] --> B[Preprocessing Text]
+    B --> C[IndoBERT Feature Extraction]
+    C --> D[Mean Pooling Embedding]
+    D --> E[XGBoost Classification]
+    E --> F[Dashboard Analisis]
+    F --> G[Knowledge Base]
+    G --> H[FAISS Retrieval]
+    H --> I[Gemini]
+    I --> J[RAG Chatbot]
 
 ---
 
@@ -216,21 +184,13 @@ Sistem menghasilkan:
 
 ---
 
-## 🖼️ Contoh Output Sistem
-
-> Contoh hasil analisis transaksi, visualisasi dashboard, dan chatbot.
-
-![Output Sistem](images/output.png)
-
----
-
 # 📈 Dataset
 
 Dataset yang digunakan merupakan **dataset sintetis** yang dibuat menggunakan ChatGPT untuk keperluan penelitian dan pengembangan sistem analisis transaksi keuangan.
 
 ---
 
-## 🖼️ Contoh Dataset
+# 🖼️ Contoh Dataset
 
 > Contoh data transaksi yang digunakan dalam proses pelatihan dan pengujian model.
 
@@ -291,3 +251,6 @@ streamlit run app.py
 
 This project is licensed under the **MIT License**.
 Copyright (c) 2026 **Yogi Irawan**
+
+---
+````

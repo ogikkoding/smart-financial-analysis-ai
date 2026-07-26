@@ -1,160 +1,155 @@
-# 💰 Intelligent Financial Transaction Analysis System Using Machine Learning and Retrieval-Augmented Generation Chatbot Based on Streamlit
+# 💰 Intelligent Financial Transaction Analysis System Using Hybrid Machine Learning and Retrieval-Augmented Generation (RAG)
 
-## 📖 Description
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-red)
+![IndoBERT](https://img.shields.io/badge/IndoBERT-NLP-yellow)
+![XGBoost](https://img.shields.io/badge/XGBoost-Classification-green)
+![FAISS](https://img.shields.io/badge/FAISS-Vector_Database-purple)
+![Google Gemini](https://img.shields.io/badge/Google_Gemini-RAG-blueviolet)
+![License](https://img.shields.io/badge/License-MIT-brightgreen)
 
-This project aims to develop an intelligent financial transaction analysis system by integrating **Artificial Intelligence (AI)** techniques, specifically **Machine Learning** and **Retrieval-Augmented Generation (RAG)**. The system is designed to assist users in automatically analyzing financial transaction data by classifying transactions based on transaction category, transaction type, and payment method.
+> An intelligent financial transaction analysis system built with **Streamlit**, combining **Machine Learning** and **Retrieval-Augmented Generation (RAG)**. The application automatically classifies financial transactions, visualizes analytical insights, and provides an AI-powered chatbot capable of answering questions based on transaction data.
 
-The classification process employs a **Hybrid IndoBERT-XGBoost** approach, where **IndoBERT** serves as a _feature extractor_ to generate semantic representations of transaction texts, while **XGBoost** acts as the _classifier_ to perform prediction. The classification results are presented through an interactive dashboard, enabling users to gain insights into their transaction patterns more effectively.
+---
 
-In addition to transaction classification and analysis, the system provides a **Retrieval-Augmented Generation (RAG)** chatbot that allows users to ask questions related to the analysis results. The chatbot utilizes a knowledge base generated from transaction data to produce accurate, relevant, and context-aware responses.
+# 📖 Overview
 
-The application is developed using **Streamlit** as an interactive web interface, allowing users to upload transaction datasets, analyze financial records, visualize results, and interact with the AI chatbot through a single integrated platform.
+This project introduces an intelligent web-based financial transaction analysis system that integrates **Machine Learning**, **Natural Language Processing (NLP)**, and **Large Language Models (LLMs)** to automate transaction analysis.
+
+The classification component employs a **Hybrid IndoBERT-XGBoost** architecture. Rather than using IndoBERT as an end-to-end classifier, the pretrained **IndoBERT Base** model acts as a **feature extractor** that converts transaction descriptions into contextual embedding vectors. These embeddings are then classified using **XGBoost**, resulting in efficient and accurate predictions.
+
+The system simultaneously predicts three transaction attributes:
+
+- 🏷️ Transaction Category
+- 💰 Transaction Type
+- 💳 Payment Method
+
+Beyond classification, the application automatically generates a **Knowledge Base** from uploaded transaction data. The knowledge base is indexed using **FAISS**, enabling efficient semantic retrieval. Retrieved information is subsequently utilized by **Google Gemini** through a **Retrieval-Augmented Generation (RAG)** pipeline, allowing users to interact naturally with their financial data via an intelligent chatbot.
+
+The entire workflow is deployed using **Streamlit**, providing an interactive dashboard for transaction analysis, visualization, prediction, and conversational AI.
+
+---
+
+# ✨ Key Features
+
+- 📂 Upload financial transaction datasets (.csv or .xlsx)
+- 🏷️ Automatic transaction category classification
+- 💰 Automatic transaction type prediction
+- 💳 Automatic payment method prediction
+- 📊 Interactive financial analytics dashboard
+- 📈 Data visualization using Plotly
+- 📥 Download prediction results
+- 🧠 Automatic Knowledge Base generation
+- 🔍 Semantic document retrieval using FAISS
+- 🤖 Retrieval-Augmented Generation (RAG) chatbot
+- ✨ Google Gemini integration for contextual question answering
 
 ---
 
 # 🖼️ Application Preview
 
-### 🏠 Home Page
+## 🏠 Home Page
 
-> The main interface displayed before the transaction analysis process begins.
+Landing page before transaction analysis.
 
-![Home Page](IMAGES/home.png)
+![Home](IMAGES/home.png)
 
 ---
 
-### 📊 Analysis Dashboard and Prediction Results
+## 📊 Analytics Dashboard
 
-> Interactive dashboard presenting transaction analysis and visualization.
+Interactive dashboard displaying classification results and financial insights.
 
 ![Dashboard](IMAGES/analisis.png)
 
 ---
 
-### 🤖 RAG Chatbot
+## 🤖 RAG Chatbot
 
-> Retrieval-Augmented Generation (RAG) chatbot that answers questions related to transaction analysis results.
+AI-powered chatbot capable of answering questions about transaction analysis.
 
-![Chatbot](images/chatboot.png)
+![Chatbot](IMAGES/chatboot.png)
 
 ---
 
-# ✨ Features
+## 🎥 Application Workflow
 
-- 📂 Upload transaction datasets in **CSV** or **Excel (.xlsx)** format.
-- 🏷️ Predict **transaction categories** _(Shopping, Salary, Entertainment, Investment, Healthcare, Food & Beverage, Education, Travel, Transportation, and Utilities)._
-- 💰 Predict **transaction types** _(Income and Expense)._
-- 💳 Predict **payment methods** _(BNI, BCA, BRI, Mandiri, QRIS, OVO, GoPay, DANA, ShopeePay, and Cash)._
-- 📊 Interactive dashboard for transaction analysis and visualization.
-- 📥 Download prediction and analysis results.
-- 🧠 Automatically generate a **Knowledge Base** from transaction data.
-- 🤖 AI chatbot powered by **Retrieval-Augmented Generation (RAG)**.
-- 🔍 Retrieve relevant information using **FAISS Vector Database**.
-- ✨ Integrate **Google Gemini** to generate informative and context-aware chatbot responses.
+Complete workflow from dataset upload to intelligent chatbot interaction.
+
+![Demo](IMAGES/Smart_finance.gif)
 
 ---
 
 # 🧠 Methodology
 
-## Machine Learning
+## Hybrid Machine Learning
 
-The transaction classification module utilizes a **Hybrid IndoBERT-XGBoost** approach consisting of the following stages:
+The transaction classification pipeline follows a hybrid architecture:
 
-- **IndoBERT Base** as the **text encoder** to transform transaction descriptions into dense vector representations (embeddings).
-- **Mean Pooling** to generate sentence-level embeddings from IndoBERT token outputs.
-- **XGBoost Classifier** to classify transactions based on the generated embeddings.
+- **IndoBERT Base** as a pretrained text encoder
+- **Mean Pooling** for sentence embedding generation
+- **XGBoost** as the final classifier
 
-### Classification Models
-
-The system employs three independently trained classification models:
-
-- 🏷️ **Transaction Category Model**
-- 💰 **Transaction Type Model**
-- 💳 **Payment Method Model**
+Instead of fine-tuning IndoBERT for classification, contextual embeddings extracted from IndoBERT are utilized as feature vectors for XGBoost.
 
 ---
 
-# 🤖 Chatbot
+## Classification Models
 
-The chatbot module is built using:
+Three independent classification models were developed:
 
-- Retrieval-Augmented Generation (RAG)
-- FAISS Vector Search
+- 🏷️ Transaction Category Model
+- 💰 Transaction Type Model
+- 💳 Payment Method Model
+
+---
+
+## Retrieval-Augmented Generation (RAG)
+
+The conversational AI module combines:
+
 - Google Gemini
+- FAISS Vector Database
+- Semantic Retrieval
+- Knowledge Base Generation
 
 ---
 
 # 🔄 System Pipeline
 
-```text
-Dataset
-↓
-Text Preprocessing
-↓
-IndoBERT Feature Extraction
-↓
-Mean Pooling Embedding
-↓
-XGBoost Classification
-↓
-Analysis Dashboard
-↓
-Knowledge Base
-↓
-FAISS Retrieval
-↓
-Google Gemini
-↓
-RAG Chatbot
+```mermaid
+graph TD
+
+A[Transaction Dataset]
+--> B[Text Preprocessing]
+
+B --> C[IndoBERT Feature Extraction]
+
+C --> D[Mean Pooling Embedding]
+
+D --> E[XGBoost Classification]
+
+E --> F[Analytics Dashboard]
+
+F --> G[Knowledge Base Generation]
+
+G --> H[FAISS Vector Index]
+
+H --> I[Relevant Context Retrieval]
+
+I --> J[Google Gemini]
+
+J --> K[RAG Chatbot Response]
 ```
 
 ---
 
-## 🖼️ System Pipeline Diagram
-
-> Overview of the system workflow from transaction classification to the RAG chatbot.
-
-![System Pipeline](images/pipeline.png)
-
----
-
-# 🏗️ System Architecture
-
-```text
-Dataset
-↓
-IndoBERT
-↓
-Embedding
-↓
-XGBoost
-↓
-Dashboard
-↓
-Knowledge Base
-↓
-FAISS
-↓
-Google Gemini
-↓
-Chatbot
-```
-
----
-
-## 🖼️ System Architecture Diagram
-
-> Overall architecture of the intelligent financial transaction analysis system.
-
-![System Architecture](images/architecture.png)
-
----
-
-# 📂 Project Structure
+# 🏗️ Project Structure
 
 ```text
 project/
-
-├── STREAMLITE KEUANGAN/
+│
+├── STREAMLIT_FINANCE/
 │   ├── app.py
 │   └── run.bat
 │
@@ -167,84 +162,86 @@ project/
 │   ├── xgb_model_pembayaran.json
 │   ├── encoder_kategori.npy
 │   ├── encoder_jenis.npy
-│   ├── encoder_pembayaran.npy
+│   └── encoder_pembayaran.npy
 │
-├── images/
+├── IMAGES/
 │   ├── home.png
-│   ├── upload.png
-│   ├── dashboard.png
-│   ├── prediksi.png
+│   ├── analisis.png
 │   ├── chatbot.png
+│   ├── dataset.png
 │   ├── pipeline.png
 │   ├── architecture.png
-│   └── output.png
+│   └── Smart_finance.gif
 │
 ├── requirements.txt
-│
 └── README.md
 ```
 
 ---
 
-# 🛠️ Technologies Used
+# 🛠️ Tech Stack
 
-- Python
-- Streamlit
-- Transformers
-- IndoBERT
-- XGBoost
-- Scikit-learn
-- Pandas
-- NumPy
-- FAISS
-- Plotly
-- Google Gemini API
+The application was developed using:
+
+- 🐍 Python
+- 🌐 Streamlit
+- 🤗 Hugging Face Transformers
+- 🧠 IndoBERT Base
+- 🌲 XGBoost
+- 📊 Scikit-learn
+- 📈 Plotly
+- 🔍 FAISS
+- 🐼 Pandas
+- 🔢 NumPy
+- 🤖 Google Gemini API
 
 ---
 
-# 📊 System Output
+# 📊 Prediction Output
 
 The application provides:
 
-- 🏷️ Predicted Transaction Category
-- 💰 Predicted Transaction Type
-- 💳 Predicted Payment Method
-- 📊 Interactive Transaction Analysis Dashboard
-- 📈 Data Visualization
-- 📥 Downloadable Prediction Results (CSV)
-- 🤖 AI-Powered RAG Chatbot
+- 🏷️ Transaction Category
+- 💰 Transaction Type
+- 💳 Payment Method
+- 📊 Financial Dashboard
+- 📈 Interactive Visualizations
+- 📥 Downloadable Prediction Results
+- 🤖 AI-powered Financial Assistant
 
 ---
 
-## 🖼️ Sample Output
+# 📂 Dataset
 
-> Example of transaction analysis results, dashboard visualization, and chatbot responses.
+The project utilizes a **synthetic financial transaction dataset** generated for research and educational purposes.
 
-![System Output](images/output.png)
+The dataset contains transaction information including:
+
+- Merchant
+- Transaction Description
+- Transaction Category
+- Transaction Type
+- Payment Method
+- Transaction Amount
+- Transaction Date
 
 ---
 
-# 📈 Dataset
+## 🖼️ Dataset Sample
 
-The dataset used in this project is a **synthetic financial transaction dataset** generated using **ChatGPT** for research and educational purposes in developing an intelligent financial transaction analysis system.
-
----
-
-## 🖼️ Sample Dataset
-
-> Sample transaction records used for model training and evaluation.
-
-![Dataset](images/dataset.png)
+![Dataset](IMAGES/dataset.png)
 
 ---
 
 # 🚀 Getting Started
 
-## 1. Clone the Repository
+## 1. Clone Repository
 
 ```bash
 git clone https://github.com/ogikkoding/nama-repository.git
 ```
+
+---
 
 ## 2. Navigate to the Project Directory
 
@@ -252,38 +249,111 @@ git clone https://github.com/ogikkoding/nama-repository.git
 cd nama-repository
 ```
 
+---
+
 ## 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 4. Run the Streamlit Application
+---
+
+## 4. Launch the Streamlit Application
 
 ```bash
 streamlit run app.py
 ```
 
+The application will automatically open in your default web browser.
+
 ---
 
 # 💻 Development Environment
 
-- Google Colab (Model Training)
-- Google Drive (Model Storage)
-- Visual Studio Code (Application Development)
-- Streamlit (Application Deployment)
+Developed using:
+
+- Google Colab
+- Visual Studio Code
+- Google Drive
+- Streamlit
 
 ---
 
-# 👨‍💻 Author
+# 👨‍💻 Developer
 
-**Yogi Irawan**
+## Yogi Irawan
 
-- 🎓 Bachelor's Student in Informatics
-- 🤖 Research Interests: Artificial Intelligence, Natural Language Processing, Machine Learning, and Financial Data Analytics
-- 📧 Email: yogiirawan490@gmail.com
-- 💼 LinkedIn: https://www.linkedin.com/in/yogi-irawan-ab146a387
-- 🐙 GitHub: https://github.com/ogikkoding
+**Undergraduate Student of Informatics Engineering**
+
+### Research Interests
+
+- Artificial Intelligence
+- Natural Language Processing
+- Machine Learning
+- Large Language Models
+- Retrieval-Augmented Generation
+
+### Contact
+
+📧 Email
+
+yogiirawan490@gmail.com
+
+💼 LinkedIn
+
+https://www.linkedin.com/in/yogi-irawan-ab146a387
+
+🐙 GitHub
+
+https://github.com/ogikkoding
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+If you encounter bugs, have suggestions, or wish to contribute new features, feel free to:
+
+- Open an Issue
+- Submit a Pull Request
+
+---
+
+# 🔮 Future Improvements
+
+Potential future enhancements include:
+
+- 📱 REST API deployment using FastAPI
+- ☁️ Cloud deployment with Docker
+- 📈 Time-series financial forecasting
+- 💹 Personal financial recommendation engine
+- 🧠 Fine-tuning Indonesian LLMs for finance
+- 🔍 Hybrid Retrieval using BM25 + FAISS
+- 📊 Explainable AI (SHAP) for XGBoost predictions
+
+---
+
+# 🙏 Acknowledgements
+
+Special thanks to the open-source community and the following projects:
+
+- Hugging Face Transformers
+- Google Gemini
+- FAISS
+- Streamlit
+- XGBoost
+- Scikit-learn
+- Plotly
+
+---
+
+# ⭐ Support
+
+If you find this project useful, please consider giving it a ⭐ on GitHub.
+
+Your support motivates continued development and future improvements.
 
 ---
 
@@ -291,4 +361,4 @@ streamlit run app.py
 
 This project is licensed under the **MIT License**.
 
-Copyright (c) 2026 **Yogi Irawan**
+Copyright © 2026 **Yogi Irawan**
