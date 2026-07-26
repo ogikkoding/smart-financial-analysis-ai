@@ -18,31 +18,15 @@ The application is developed using **Streamlit** as an interactive web interface
 
 > The main interface displayed before the transaction analysis process begins.
 
-![Home Page](images/home.png)
+![Home Page](IMAGES/home.png)
 
 ---
 
-### 📂 Dataset Upload
-
-> Users can upload transaction datasets in CSV or Excel format.
-
-![Upload Dataset](images/upload.png)
-
----
-
-### 📊 Analysis Dashboard
+### 📊 Analysis Dashboard and Prediction Results
 
 > Interactive dashboard presenting transaction analysis and visualization.
 
-![Dashboard](images/dashboard.png)
-
----
-
-### 🏷️ Prediction Results
-
-> Displays the predicted transaction category, transaction type, and payment method.
-
-![Prediction](images/prediksi.png)
+![Dashboard](IMAGES/analisis.png)
 
 ---
 
@@ -50,7 +34,7 @@ The application is developed using **Streamlit** as an interactive web interface
 
 > Retrieval-Augmented Generation (RAG) chatbot that answers questions related to transaction analysis results.
 
-![Chatbot](images/chatbot.png)
+![Chatbot](images/chatboot.png)
 
 ---
 

@@ -18,31 +18,15 @@ Aplikasi dikembangkan menggunakan **Streamlit** sebagai antarmuka web interaktif
 
 > Tampilan awal aplikasi sebelum proses analisis transaksi.
 
-![Halaman Utama](images/home.png)
+![Halaman Utama](IMAGES/home.png)
 
 ---
 
-### 📂 Upload Dataset
-
-> Pengguna dapat mengunggah dataset transaksi dalam format CSV atau Excel.
-
-![Upload Dataset](images/upload.png)
-
----
-
-### 📊 Dashboard Analisis
+### 📊 Dashboard Analisis dan Prediksi
 
 > Dashboard interaktif yang menampilkan hasil analisis transaksi.
 
-![Dashboard](images/dashboard.png)
-
----
-
-### 🏷️ Hasil Prediksi
-
-> Hasil klasifikasi kategori transaksi, jenis transaksi, dan metode pembayaran.
-
-![Prediksi](images/prediksi.png)
+![Dashboard](IMAGES/analisis.png)
 
 ---
 
@@ -50,7 +34,7 @@ Aplikasi dikembangkan menggunakan **Streamlit** sebagai antarmuka web interaktif
 
 > Chatbot berbasis Retrieval-Augmented Generation (RAG) yang dapat menjawab pertanyaan mengenai hasil analisis transaksi.
 
-![Chatbot](images/chatbot.png)
+![Chatbot](IMAGES/chatboot.png)
 
 ---
 
