@@ -73,7 +73,6 @@ if GEMINI_API_KEY:
 
 def get_gemini_response(prompt):
     """Mencoba memanggil model Gemini secara berurutan sampai menemukan yang aktif/free."""
-    # Daftar model Gemini free/stabil yang didukung SDK
     available_models = [
         "gemini-1.5-flash",
         "gemini-1.5-flash-latest",
@@ -86,14 +85,14 @@ def get_gemini_response(prompt):
             model = genai.GenerativeModel(model_name)
             response = model.generate_content(prompt)
             return response.text
-        except Exception as e:
-            # Jika model tidak ditemukan / error, lanjut coba model berikutnya
+        except Exception:
             continue
 
     return "⚠️ Maaf Gik, semua model Gemini saat ini sedang tidak dapat diakses. Coba periksa kembali API Key kamu."
 
 
 def chatbot_response(question, tokenizer, model, faiss_index, metadata):
+    # Cek kunci API langsung menggunakan GEMINI_API_KEY
     if not GEMINI_API_KEY:
         return "⚠️ API Key Gemini belum terkonfigurasi di Streamlit Secrets."
 
