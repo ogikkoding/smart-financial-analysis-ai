@@ -1,4 +1,4 @@
-# 💰 Sistem Analisis Transaksi Keuangan Cerdas Menggunakan Machine Learning dan Chatbot Retrieval-Augmented Generation Berbasis Streamlit
+# 💰 [# Sistem Analisis Transaksi Keuangan Cerdas Menggunakan Hybrid IndoBERT + XGBoost & RAG Chatbot](https://smart-financial-analysis-ai-9ypu8ie3j5zkyqmq2admfm.streamlit.app/)
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-red)
@@ -8,7 +8,7 @@
 ![Gemini AI](https://img.shields.io/badge/Google_Gemini-RAG_Chatbot-blueviolet)
 ![License](https://img.shields.io/badge/License-MIT-brightgreen)
 
----
+🚀 **Live Demo:** [Coba Aplikasi Web di Sini](https://smart-financial-analysis-ai-9ypu8ie3j5zkyqmq2admfm.streamlit.app/)
 
 ## 📖 Deskripsi
 
