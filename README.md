@@ -8,7 +8,7 @@
 ![Google Gemini](https://img.shields.io/badge/Google_Gemini-RAG-blueviolet)
 ![License](https://img.shields.io/badge/License-MIT-brightgreen)
 
-> An intelligent financial transaction analysis system built with **Streamlit**, combining **Machine Learning** and **Retrieval-Augmented Generation (RAG)**. The application automatically classifies financial transactions, visualizes analytical insights, and provides an AI-powered chatbot capable of answering questions based on transaction data.
+🚀 **Live Demo:** [Try the Web Application Here](https://smart-financial-analysis-ai-9ypu8ie3j5zkyqmq2admfm.streamlit.app/)
 
 ---
 
