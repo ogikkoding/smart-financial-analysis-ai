@@ -323,11 +323,9 @@ def batch_embedding(texts, tokenizer, model, batch_size=32, max_length=128):
 # INFERENCE PIPELINE (PERBAIKAN FITUR 769 DIMENSI)
 # ==========================================================
 
-
 def decode_prediction(predictions, encoder):
     predictions = np.asarray(predictions).astype(int)
     return encoder[predictions]
-
 
 def predict_dataframe(df, detected_cols, tokenizer, model):
     result_df = df.copy()
@@ -384,14 +382,12 @@ def predict_dataframe(df, detected_cols, tokenizer, model):
     result_df["Transaksi_Prediksi"] = decode_prediction(
         pred_pem, encoders["pembayaran"]
     )
-
     return result_df, embeddings_768
 
 
 # ==========================================================
 # RAG KNOWLEDGE BASE & FAISS
 # ==========================================================
-
 
 def build_knowledge(result_df):
     metadata = []
@@ -465,7 +461,6 @@ ATURAN:
 # DASHBOARD COMPONENTS
 # ==========================================================
 
-
 def show_dashboard(result_df, detected_cols):
     st.header("📊 Dashboard Analisis Transaksi")
 
@@ -536,7 +531,6 @@ def show_dashboard(result_df, detected_cols):
 # CHATBOT INTERFACE
 # ==========================================================
 
-
 def chatbot_interface(tokenizer, model, faiss_index, metadata):
     st.header("Chatbot AI Analisis Transaksi (RAG)")
 
@@ -571,7 +565,6 @@ def chatbot_interface(tokenizer, model, faiss_index, metadata):
 # ==========================================================
 # MAIN APPLICATION ROUTE
 # ==========================================================
-
 
 def main():
     # --- HEADER SECTION ---
