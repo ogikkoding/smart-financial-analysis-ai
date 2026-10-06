@@ -1,4 +1,4 @@
-# 💰 [# Sistem Analisis Transaksi Keuangan Cerdas Menggunakan Hybrid IndoBERT + XGBoost & RAG Chatbot](https://smart-financial-analysis-ai-9ypu8ie3j5zkyqmq2admfm.streamlit.app/)
+# 💰 Sistem Analisis Transaksi Keuangan Cerdas Menggunakan Hybrid IndoBERT + XGBoost & RAG Chatbot
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Web_App-red)
