@@ -62,16 +62,66 @@ if not os.path.exists(MODEL_DIR):
     MODEL_DIR = os.path.join(BASE_DIR, "..", "MODELS")
 
 # ==========================================================
-# KONFIGURASI GEMINI API (SUPPORT STREAMLIT SECRETS)
+# KONFIGURASI GEMINI API (FLEKSIBEL AUTO-FALLBACK)
 # ==========================================================
 load_dotenv()
 GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY", os.getenv("GEMINI_API_KEY"))
 
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel(model_name="gemini-1.5-flash") # disesuaikan ke versi stabil
-else:
-    gemini_model = None
+
+
+def get_gemini_response(prompt):
+    """Mencoba memanggil model Gemini secara berurutan sampai menemukan yang aktif/free."""
+    # Daftar model Gemini free/stabil yang didukung SDK
+    available_models = [
+        "gemini-1.5-flash",
+        "gemini-1.5-flash-latest",
+        "gemini-1.5-pro",
+        "gemini-pro",
+    ]
+
+    for model_name in available_models:
+        try:
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            # Jika model tidak ditemukan / error, lanjut coba model berikutnya
+            continue
+
+    return "⚠️ Maaf Gik, semua model Gemini saat ini sedang tidak dapat diakses. Coba periksa kembali API Key kamu."
+
+
+def chatbot_response(question, tokenizer, model, faiss_index, metadata):
+    if not GEMINI_API_KEY:
+        return "⚠️ API Key Gemini belum terkonfigurasi di Streamlit Secrets."
+
+    contexts = retrieve_context(
+        question, tokenizer, model, faiss_index, metadata
+    )
+    context_text = (
+        "\n\n".join(contexts)
+        if contexts
+        else "Tidak ditemukan informasi relevan."
+    )
+
+    prompt = f"""
+Anda adalah Asisten AI Analisis Transaksi Keuangan Cerdas.
+Jawablah pertanyaan pengguna HANYA berdasarkan CONTEXT data transaksi berikut.
+
+CONTEXT:
+{context_text}
+
+PERTANYAAN:
+{question}
+
+ATURAN:
+1. Jawab singkat, akurat, dan ramah.
+2. Jangan membuat asumsi atau informasi baru di luar CONTEXT.
+3. Gunakan Bahasa Indonesia yang jelas.
+"""
+    return get_gemini_response(prompt)
 
 # ==========================================================
 # LOAD MODEL INDOBERT, XGBOOST, ENCODERS & SCALERS (CACHED)
