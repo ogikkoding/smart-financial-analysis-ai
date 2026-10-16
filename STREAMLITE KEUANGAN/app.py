@@ -110,17 +110,16 @@ ATURAN:
 3. Gunakan Bahasa Indonesia yang jelas.
 """
     try:
-        # Menggunakan model gemini-1.5-flash dengan konfigurasi generasi dasar
-        gemini = genai.GenerativeModel("gemini-1.5-flash")
+        # Inisialisasi model dengan nama variabel 'gemini_model'
+        gemini_model = genai.GenerativeModel("gemini-1.5-flash")
         
-        response = gemini.generate_content(
+        response = gemini_model.generate_content(
             prompt,
             generation_config=genai.types.GenerationConfig(
-                temperature=0.2, # Temperature rendah agar AI fokus pada CONTEXT
+                temperature=0.2,
             )
         )
         
-        # Penanganan jika response diblokir oleh filter keamanan
         if response.text:
             return response.text
         else:
