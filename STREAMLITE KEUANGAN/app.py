@@ -5,6 +5,7 @@ import gc
 import os
 import re
 import faiss
+from dotenv import load_dotenv
 from google import genai
 
 load_dotenv()
