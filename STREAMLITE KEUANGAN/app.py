@@ -80,23 +80,26 @@ if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
 
+
 def chatbot_response(question, tokenizer, model, faiss_index, metadata):
     if not GEMINI_API_KEY:
-        return "⚠️ API Key Gemini belum terkonfigurasi di Streamlit Secrets atau file .env."
+        return "⚠️ API Key Gemini belum dikonfigurasi di Streamlit Secrets."
 
-    # Retrieve Context dari FAISS
-    contexts = retrieve_context(
-        question, tokenizer, model, faiss_index, metadata
-    )
-    context_text = (
-        "\n\n".join(contexts)
-        if contexts
-        else "Tidak ditemukan informasi relevan."
-    )
+    try:
+        # Mengambil konteks relevan dari FAISS
+        contexts = retrieve_context(
+            question, tokenizer, model, faiss_index, metadata
+        )
 
-    prompt = f"""
+        context_text = (
+            "\n\n".join(contexts)
+            if contexts
+            else "Tidak ditemukan informasi relevan."
+        )
+
+        prompt = f"""
 Anda adalah Asisten AI Analisis Transaksi Keuangan Cerdas.
-Jawablah pertanyaan pengguna HANYA berdasarkan CONTEXT data transaksi berikut.
+Jawablah pertanyaan hanya berdasarkan konteks data transaksi berikut.
 
 CONTEXT:
 {context_text}
@@ -106,28 +109,26 @@ PERTANYAAN:
 
 ATURAN:
 1. Jawab singkat, akurat, dan ramah.
-2. Jangan membuat asumsi atau informasi baru di luar CONTEXT.
+2. Jangan membuat asumsi di luar konteks.
 3. Gunakan Bahasa Indonesia yang jelas.
 """
-    try:
-        # Inisialisasi model
+
         gemini_model = genai.GenerativeModel("gemini-1.5-flash")
-        
+
         response = gemini_model.generate_content(
             prompt,
             generation_config=genai.types.GenerationConfig(
-                temperature=0.2,
+                temperature=0.2
             )
         )
-        
-        # Penanganan aman untuk mengambil respon teks tanpa memicu ValueError
-        if response.candidates and response.candidates[0].content.parts:
+
+        if response.text:
             return response.text
-        else:
-            return "⚠️ Gemini tidak dapat memberikan jawaban karena batasan keamanan atau konteks tidak memadai."
+
+        return "⚠️ Gemini tidak menghasilkan jawaban."
 
     except Exception as e:
-        return f"⚠ Error Gemini: {str(e)}"
+        return f"⚠️ Error Gemini: {str(e)}"
 
 # ==========================================================
 # LOAD MODEL INDOBERT, XGBOOST, ENCODERS & SCALERS (CACHED)
