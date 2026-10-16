@@ -251,6 +251,7 @@ def retrieve_context(question, tokenizer, model, faiss_index, metadata, top_k=5)
     return contexts
 
 
+
 def chatbot_response(question, tokenizer, model, faiss_index, metadata):
     if gemini_client is None:
         return "⚠️ API Key Gemini belum dikonfigurasi."
@@ -282,15 +283,35 @@ ATURAN:
 3. Gunakan Bahasa Indonesia yang jelas.
 """
 
-        response = gemini_client.models.generate_content(
-            model="gemini-3.8-flash",
-            contents=prompt
-        )
+        import time
 
-        return response.text or "Maaf, tidak ada jawaban yang dihasilkan."
+        for attempt in range(3):
+            try:
+                response = gemini_client.models.generate_content(
+                    model="gemini-3.8-flash",
+                    contents=prompt,
+                )
+
+                return response.text or "Maaf, tidak ada jawaban yang dihasilkan."
+
+            except Exception as e:
+                error_message = str(e)
+
+                if "503" in error_message and attempt < 2:
+                    time.sleep(2 * (attempt + 1))
+                    continue
+
+                if "503" in error_message:
+                    return (
+                        "⚠️ Gemini sedang sibuk setelah 3 percobaan. "
+                        "Silakan coba kembali beberapa saat lagi."
+                    )
+
+                raise
 
     except Exception as e:
         return f"⚠️ Gagal menghasilkan jawaban: {e}"
+
 
 
 # ==========================================================
