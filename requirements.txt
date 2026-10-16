@@ -12,4 +12,3 @@ faiss-cpu
 google-genai
 python-dotenv
 openpyxl
-python-dotenv

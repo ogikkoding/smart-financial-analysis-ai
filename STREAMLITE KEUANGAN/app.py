@@ -5,21 +5,6 @@ import gc
 import os
 import re
 import faiss
-from dotenv import load_dotenv
-from google import genai
-
-load_dotenv()
-
-try:
-    GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-except Exception:
-    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-
-gemini_client = (
-    genai.Client(api_key=GEMINI_API_KEY)
-    if GEMINI_API_KEY
-    else None
-)
 import joblib
 import numpy as np
 import pandas as pd
@@ -27,7 +12,9 @@ import plotly.express as px
 import streamlit as st
 import torch
 import xgboost as xgb
+
 from dotenv import load_dotenv
+from google import genai
 from transformers import AutoModel, AutoTokenizer
 
 # ==========================================================
@@ -75,49 +62,28 @@ MODEL_DIR = os.path.join(BASE_DIR, "MODELS")
 if not os.path.exists(MODEL_DIR):
     MODEL_DIR = os.path.join(BASE_DIR, "..", "MODELS")
 
-
 # ==========================================================
 # KONFIGURASI GEMINI API
 # ==========================================================
 load_dotenv()
 
 try:
-    GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+    GEMINI_API_KEY = (
+        st.secrets.get("GEMINI_API_KEY")
+        or os.getenv("GEMINI_API_KEY")
+    )
 except Exception:
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-gemini_client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
-
-
-# ==========================================================
-# CHATBOT RAG
-# ==========================================================
-def chatbot_response(question, tokenizer, model, faiss_index, metadata):
-    if gemini_client is None:
-        return "⚠️ GEMINI_API_KEY belum dikonfigurasi."
-
-    try:
-        contexts = retrieve_context(question, tokenizer, model, faiss_index, metadata)
-        prompt = f"""
-Jawab pertanyaan hanya berdasarkan konteks transaksi berikut.
-Jika informasi tidak tersedia, katakan demikian. Gunakan Bahasa Indonesia.
-
-KONTEKS:
-{"\n\n".join(contexts) if contexts else "Tidak ditemukan informasi relevan."}
-
-PERTANYAAN:
-{question}
-"""
-        response = gemini_client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-            config={"temperature": 0.2}
-        )
-        return response.text or "⚠️ Gemini tidak menghasilkan jawaban."
-
-    except Exception as e:
-        return f"⚠️ Error Gemini: {e}"
-
+try:
+    gemini_client = (
+        genai.Client(api_key=GEMINI_API_KEY)
+        if GEMINI_API_KEY
+        else None
+    )
+except Exception as e:
+    gemini_client = None
+    st.warning(f"Gagal menginisialisasi Gemini API: {e}")
 
 
 # ==========================================================
