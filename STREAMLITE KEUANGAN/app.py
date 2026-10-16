@@ -110,7 +110,7 @@ ATURAN:
 3. Gunakan Bahasa Indonesia yang jelas.
 """
     try:
-        # Inisialisasi model dengan nama variabel 'gemini_model'
+        # Inisialisasi model
         gemini_model = genai.GenerativeModel("gemini-1.5-flash")
         
         response = gemini_model.generate_content(
@@ -120,10 +120,11 @@ ATURAN:
             )
         )
         
-        if response.text:
+        # Penanganan aman untuk mengambil respon teks tanpa memicu ValueError
+        if response.candidates and response.candidates[0].content.parts:
             return response.text
         else:
-            return "⚠️ Gemini tidak dapat memberikan jawaban karena batasan keamanan/sistem."
+            return "⚠️ Gemini tidak dapat memberikan jawaban karena batasan keamanan atau konteks tidak memadai."
 
     except Exception as e:
         return f"⚠ Error Gemini: {str(e)}"
