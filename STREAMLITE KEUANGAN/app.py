@@ -7,7 +7,7 @@ import re
 import faiss
 from google import genai
 
-GEMINI_API_KEY = None
+load_dotenv()
 
 try:
     GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
@@ -74,68 +74,49 @@ MODEL_DIR = os.path.join(BASE_DIR, "MODELS")
 if not os.path.exists(MODEL_DIR):
     MODEL_DIR = os.path.join(BASE_DIR, "..", "MODELS")
 
+
 # ==========================================================
-# KONFIGURASI GEMINI API (UPDATED & OPTIMIZED)
+# KONFIGURASI GEMINI API
 # ==========================================================
 load_dotenv()
 
-# Mengambil API key dari st.secrets atau .env
-GEMINI_API_KEY = None
 try:
-    if "GEMINI_API_KEY" in st.secrets:
-        GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-    else:
-        GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 except Exception:
     GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
+gemini_client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
 
+
+# ==========================================================
+# CHATBOT RAG
+# ==========================================================
 def chatbot_response(question, tokenizer, model, faiss_index, metadata):
     if gemini_client is None:
         return "⚠️ GEMINI_API_KEY belum dikonfigurasi."
 
     try:
-        contexts = retrieve_context(
-            question, tokenizer, model, faiss_index, metadata
-        )
-
-        context_text = (
-            "\n\n".join(contexts)
-            if contexts
-            else "Tidak ditemukan informasi relevan."
-        )
-
+        contexts = retrieve_context(question, tokenizer, model, faiss_index, metadata)
         prompt = f"""
-Anda adalah Asisten AI Analisis Transaksi Keuangan.
+Jawab pertanyaan hanya berdasarkan konteks transaksi berikut.
+Jika informasi tidak tersedia, katakan demikian. Gunakan Bahasa Indonesia.
 
-Jawablah pertanyaan hanya berdasarkan konteks transaksi berikut.
-
-CONTEXT:
-{context_text}
+KONTEKS:
+{"\n\n".join(contexts) if contexts else "Tidak ditemukan informasi relevan."}
 
 PERTANYAAN:
 {question}
-
-ATURAN:
-1. Jawab singkat dan akurat dalam Bahasa Indonesia.
-2. Jangan mengarang data transaksi.
-3. Jika konteks tidak cukup, jelaskan bahwa data tidak tersedia.
 """
-
         response = gemini_client.models.generate_content(
-            model="gemini-3.5-flash",
+            model="gemini-2.5-flash",
             contents=prompt,
-            config={
-                "temperature": 0.2
-            }
+            config={"temperature": 0.2}
         )
-
         return response.text or "⚠️ Gemini tidak menghasilkan jawaban."
 
     except Exception as e:
-        return f"⚠️ Error Gemini: {str(e)}"
+        return f"⚠️ Error Gemini: {e}"
+
 
 
 # ==========================================================
