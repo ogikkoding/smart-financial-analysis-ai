@@ -5,7 +5,20 @@ import gc
 import os
 import re
 import faiss
-import google.generativeai as genai
+from google import genai
+
+GEMINI_API_KEY = None
+
+try:
+    GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+except Exception:
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+gemini_client = (
+    genai.Client(api_key=GEMINI_API_KEY)
+    if GEMINI_API_KEY
+    else None
+)
 import joblib
 import numpy as np
 import pandas as pd
@@ -79,14 +92,11 @@ except Exception:
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
 
-
-
 def chatbot_response(question, tokenizer, model, faiss_index, metadata):
-    if not GEMINI_API_KEY:
-        return "⚠️ API Key Gemini belum dikonfigurasi di Streamlit Secrets."
+    if gemini_client is None:
+        return "⚠️ GEMINI_API_KEY belum dikonfigurasi."
 
     try:
-        # Mengambil konteks relevan dari FAISS
         contexts = retrieve_context(
             question, tokenizer, model, faiss_index, metadata
         )
@@ -98,8 +108,9 @@ def chatbot_response(question, tokenizer, model, faiss_index, metadata):
         )
 
         prompt = f"""
-Anda adalah Asisten AI Analisis Transaksi Keuangan Cerdas.
-Jawablah pertanyaan hanya berdasarkan konteks data transaksi berikut.
+Anda adalah Asisten AI Analisis Transaksi Keuangan.
+
+Jawablah pertanyaan hanya berdasarkan konteks transaksi berikut.
 
 CONTEXT:
 {context_text}
@@ -108,27 +119,24 @@ PERTANYAAN:
 {question}
 
 ATURAN:
-1. Jawab singkat, akurat, dan ramah.
-2. Jangan membuat asumsi di luar konteks.
-3. Gunakan Bahasa Indonesia yang jelas.
+1. Jawab singkat dan akurat dalam Bahasa Indonesia.
+2. Jangan mengarang data transaksi.
+3. Jika konteks tidak cukup, jelaskan bahwa data tidak tersedia.
 """
 
-        gemini_model = genai.GenerativeModel("gemini-1.5-flash")
-
-        response = gemini_model.generate_content(
-            prompt,
-            generation_config=genai.types.GenerationConfig(
-                temperature=0.2
-            )
+        response = gemini_client.models.generate_content(
+            model="gemini-3.5-flash",
+            contents=prompt,
+            config={
+                "temperature": 0.2
+            }
         )
 
-        if response.text:
-            return response.text
-
-        return "⚠️ Gemini tidak menghasilkan jawaban."
+        return response.text or "⚠️ Gemini tidak menghasilkan jawaban."
 
     except Exception as e:
         return f"⚠️ Error Gemini: {str(e)}"
+
 
 # ==========================================================
 # LOAD MODEL INDOBERT, XGBOOST, ENCODERS & SCALERS (CACHED)

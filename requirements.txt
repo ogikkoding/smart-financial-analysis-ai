@@ -9,6 +9,6 @@ pandas
 plotly
 streamlit
 faiss-cpu
-google-generativeai
+google-genai
 python-dotenv
 openpyxl
