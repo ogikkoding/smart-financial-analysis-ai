@@ -250,14 +250,23 @@ def retrieve_context(question, tokenizer, model, faiss_index, metadata, top_k=5)
     contexts = [metadata[idx]["knowledge"] for idx in indices[0] if idx != -1 and idx < len(metadata)]
     return contexts
 
+
 def chatbot_response(question, tokenizer, model, faiss_index, metadata):
-    if not gemini_model:
-        return "⚠️ API Key Gemini belum terkonfigurasi di Streamlit Secrets."
+    if gemini_client is None:
+        return "⚠️ API Key Gemini belum dikonfigurasi."
 
-    contexts = retrieve_context(question, tokenizer, model, faiss_index, metadata)
-    context_text = "\n\n".join(contexts) if contexts else "Tidak ditemukan informasi relevan."
+    try:
+        contexts = retrieve_context(
+            question, tokenizer, model, faiss_index, metadata
+        )
 
-    prompt = f"""
+        context_text = (
+            "\n\n".join(contexts)
+            if contexts
+            else "Tidak ditemukan informasi relevan."
+        )
+
+        prompt = f"""
 Anda adalah Asisten AI Analisis Transaksi Keuangan Cerdas.
 Jawablah pertanyaan pengguna HANYA berdasarkan CONTEXT data transaksi berikut.
 
@@ -272,8 +281,17 @@ ATURAN:
 2. Jangan membuat asumsi atau informasi baru di luar CONTEXT.
 3. Gunakan Bahasa Indonesia yang jelas.
 """
-    response = gemini_model.generate_content(prompt)
-    return response.text
+
+        response = gemini_client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+
+        return response.text or "Maaf, tidak ada jawaban yang dihasilkan."
+
+    except Exception as e:
+        return f"⚠️ Gagal menghasilkan jawaban: {e}"
+
 
 # ==========================================================
 # DASHBOARD COMPONENTS & CHATBOT
