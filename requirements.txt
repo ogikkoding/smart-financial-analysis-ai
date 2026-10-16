@@ -2,6 +2,8 @@
 torch
 transformers
 xgboost
+scikit-learn
+sklearn
 joblib
 numpy
 pandas

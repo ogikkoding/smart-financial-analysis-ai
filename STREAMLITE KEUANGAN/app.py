@@ -62,10 +62,19 @@ if not os.path.exists(MODEL_DIR):
     MODEL_DIR = os.path.join(BASE_DIR, "..", "MODELS")
 
 # ==========================================================
-# KONFIGURASI GEMINI API (SIMPLE & RINGKAS)
+# KONFIGURASI GEMINI API (UPDATED & OPTIMIZED)
 # ==========================================================
 load_dotenv()
-GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY", os.getenv("GEMINI_API_KEY"))
+
+# Mengambil API key dari st.secrets atau .env
+GEMINI_API_KEY = None
+try:
+    if "GEMINI_API_KEY" in st.secrets:
+        GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+    else:
+        GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+except Exception:
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
@@ -73,7 +82,7 @@ if GEMINI_API_KEY:
 
 def chatbot_response(question, tokenizer, model, faiss_index, metadata):
     if not GEMINI_API_KEY:
-        return "⚠️ API Key Gemini belum terkonfigurasi di Streamlit Secrets."
+        return "⚠️ API Key Gemini belum terkonfigurasi di Streamlit Secrets atau file .env."
 
     # Retrieve Context dari FAISS
     contexts = retrieve_context(
@@ -101,12 +110,24 @@ ATURAN:
 3. Gunakan Bahasa Indonesia yang jelas.
 """
     try:
-        # Panggil langsung model gemini-1.5-flash
+        # Menggunakan model gemini-1.5-flash dengan konfigurasi generasi dasar
         gemini = genai.GenerativeModel("gemini-1.5-flash")
-        response = gemini.generate_content(prompt)
-        return response.text
+        
+        response = gemini.generate_content(
+            prompt,
+            generation_config=genai.types.GenerationConfig(
+                temperature=0.2, # Temperature rendah agar AI fokus pada CONTEXT
+            )
+        )
+        
+        # Penanganan jika response diblokir oleh filter keamanan
+        if response.text:
+            return response.text
+        else:
+            return "⚠️ Gemini tidak dapat memberikan jawaban karena batasan keamanan/sistem."
+
     except Exception as e:
-        return f"⚠️️ Error Gemini: {e}"
+        return f"⚠ Error Gemini: {str(e)}"
 
 # ==========================================================
 # LOAD MODEL INDOBERT, XGBOOST, ENCODERS & SCALERS (CACHED)
